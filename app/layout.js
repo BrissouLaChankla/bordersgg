@@ -18,7 +18,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${avenir.variable} ${beaufort.variable}`}>
+    <html
+      lang="en"
+      className={`${avenir.variable} ${beaufort.variable}`}
+      data-theme="custom-dark"
+    >
       <body className="antialiased ">{children}</body>
     </html>
   );
