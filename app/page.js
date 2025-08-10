@@ -303,8 +303,17 @@ export default function Home() {
               placeholder="Anything I should keep in mind ? "
               value={data.comments}
             ></textarea> */}
-            <div className="flex justify-end mt-4">
-              <button className="btn btn-primary w-full">Order now !</button>
+            <div className="flex gap-4 mt-4">
+              <a
+                href={`/preview?${new URLSearchParams(
+                  flattenData(data)
+                ).toString()}`}
+                target="_blank"
+                className="btn btn-primary btn-outline"
+              >
+                Preview Fullscreen
+              </a>
+              <button className="btn btn-primary grow">Order now (✿◠‿◠)</button>
             </div>
           </fieldset>
         </div>
@@ -312,6 +321,18 @@ export default function Home() {
     </div>
   );
 }
+
+const flattenData = (data, prefix = "", res = {}) => {
+  for (const [key, value] of Object.entries(data)) {
+    const newKey = prefix ? `${prefix}.${key}` : key;
+    if (value && typeof value === "object" && !Array.isArray(value)) {
+      flattenData(value, newKey, res);
+    } else {
+      res[newKey] = value;
+    }
+  }
+  return res;
+};
 
 const RuneSelect = ({
   latestVersion,
