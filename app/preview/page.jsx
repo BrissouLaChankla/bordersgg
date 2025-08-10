@@ -4,8 +4,9 @@ import { CometCard } from "@/components/ui/comet-card";
 import Image from "next/image";
 import useSWR from "swr";
 import fetcher from "@/lib/fetcher";
+import { Suspense } from "react";
 
-export default function Preview() {
+function PreviewContent() {
   const { data: versions } = useSWR(
     "https://ddragon.leagueoflegends.com/api/versions.json",
     fetcher
@@ -14,8 +15,6 @@ export default function Preview() {
   const latestVersion = versions?.[0];
   const searchParams = useSearchParams();
   const data = Object.fromEntries(searchParams);
-
-  console.log(data);
 
   return (
     <div className="bg-black h-screen flex items-center justify-center">
@@ -96,5 +95,19 @@ export default function Preview() {
         </div>
       </CometCard>
     </div>
+  );
+}
+
+export default function Preview() {
+  return (
+    <Suspense
+      fallback={
+        <div className="bg-black h-screen flex items-center justify-center text-white">
+          Chargement...
+        </div>
+      }
+    >
+      <PreviewContent />
+    </Suspense>
   );
 }
