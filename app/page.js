@@ -80,7 +80,7 @@ export default function Home() {
                 />
 
                 <img
-                  src={`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/img/spell/${data.summonerSpell.d}.png`}
+                  src={`https://ddragon.leagueoflegends.com/cdn/10.10.5/img/spell/${data.summonerSpell.d}.png`}
                   alt="D summoner spell"
                   width={40}
                   height={40}
@@ -88,7 +88,7 @@ export default function Home() {
                 />
 
                 <img
-                  src={`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/img/spell/${data.summonerSpell.f}.png`}
+                  src={`https://ddragon.leagueoflegends.com/cdn/10.10.5/img/spell/${data.summonerSpell.f}.png`}
                   alt="F summoner spell"
                   width={40}
                   height={40}
@@ -182,7 +182,7 @@ export default function Home() {
             />
             <div className="grid grid-cols-2 gap-6 mb-2">
               <div>
-                <label className="label mb-1.5" htmlFor="title">
+                <label className="label mb-1.5 " htmlFor="title">
                   Title
                 </label>
                 <input
@@ -392,7 +392,7 @@ const SummonerSpellSelect = ({
 }) => {
   const { data: summonerSpellsData } = useSWR(
     latestVersion
-      ? `https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/en_US/summoner.json`
+      ? `https://ddragon.leagueoflegends.com/cdn/10.10.5/data/en_US/summoner.json`
       : null,
     fetcher
   );
@@ -406,7 +406,7 @@ const SummonerSpellSelect = ({
     return true;
   });
 
-  summonerSpells = summonerSpells.slice(0, -2);
+  // summonerSpells = summonerSpells.slice(0, -2);
 
   return (
     <div>
@@ -418,7 +418,7 @@ const SummonerSpellSelect = ({
           {letter}
         </kbd>
         <Image
-          src={`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/img/spell/${summonerSpellSelected}.png`}
+          src={`https://ddragon.leagueoflegends.com/cdn/10.10.5/img/spell/${summonerSpellSelected}.png`}
           alt={summonerSpellSelected}
           className="cursor-pointer rounded"
           onClick={() => {}}
@@ -463,7 +463,7 @@ const SummonerSpellSelect = ({
                 title={summonerSpell.name}
               >
                 <img
-                  src={`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/img/spell/${summonerSpell.id}.png`}
+                  src={`https://ddragon.leagueoflegends.com/cdn/10.10.5/img/spell/${summonerSpell.id}.png`}
                   alt={summonerSpell.name}
                   width={64}
                   height={64}
