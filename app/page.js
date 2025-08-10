@@ -26,6 +26,7 @@ export default function Home() {
     },
     summonerSpell: { d: "SummonerFlash", f: "SummonerDot" },
     rank: "challenger",
+    language: "en_US",
   });
 
   // Retrieve last version
@@ -151,11 +152,21 @@ export default function Home() {
                   required
                 />
               </div>
-              <AvatarSelect
-                latestVersion={latestVersion}
-                avatarSelected={data.avatar}
-                onChange={(avatar) => setData({ ...data, avatar: avatar })}
-              />
+              <div className="flex gap-4">
+                <AvatarSelect
+                  latestVersion={latestVersion}
+                  avatarSelected={data.avatar}
+                  onChange={(avatar) => setData({ ...data, avatar: avatar })}
+                  languageSelected={data.language}
+                />
+                <LanguageSelect
+                  latestVersion={latestVersion}
+                  languageSelected={data.language}
+                  onChange={(language) =>
+                    setData({ ...data, language: language })
+                  }
+                />
+              </div>
             </div>
             <label className="label" htmlFor="champion">
               <span className="label-text">Champion</span>
@@ -170,6 +181,7 @@ export default function Home() {
                   skin: { name: "default", id: "default", num: 0 },
                 })
               }
+              languageSelected={data.language}
             />
             <label className="label">
               <span className="label-text -mb-1">Skin</span>
@@ -179,6 +191,7 @@ export default function Home() {
               latestVersion={latestVersion}
               skinSelected={data.skin}
               onChange={(skin) => setData({ ...data, skin: skin })}
+              languageSelected={data.language}
             />
             <div className="grid grid-cols-2 gap-6 mb-2">
               <div>
@@ -232,10 +245,12 @@ export default function Home() {
                         runes: { ...data.runes, primary: rune },
                       })
                     }
+                    languageSelected={data.language}
                   />
                   <RuneSelect
                     latestVersion={latestVersion}
                     runeSelected={data.runes.secondary}
+                    languageSelected={data.language}
                     onChange={(rune) =>
                       setData({
                         ...data,
@@ -253,6 +268,7 @@ export default function Home() {
                     letter="d"
                     latestVersion={latestVersion}
                     summonerSpellSelected={data.summonerSpell.d}
+                    languageSelected={data.language}
                     onChange={(summonerSpell) =>
                       setData({
                         ...data,
@@ -267,6 +283,7 @@ export default function Home() {
                     letter="f"
                     latestVersion={latestVersion}
                     summonerSpellSelected={data.summonerSpell.f}
+                    languageSelected={data.language}
                     onChange={(summonerSpell) =>
                       setData({
                         ...data,
@@ -296,10 +313,16 @@ export default function Home() {
   );
 }
 
-const RuneSelect = ({ latestVersion, onChange, runeSelected, type }) => {
+const RuneSelect = ({
+  latestVersion,
+  onChange,
+  runeSelected,
+  type,
+  languageSelected,
+}) => {
   const { data: runesData } = useSWR(
     latestVersion
-      ? `https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/en_US/runesReforged.json`
+      ? `https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/${languageSelected}/runesReforged.json`
       : null,
     fetcher
   );
@@ -389,10 +412,11 @@ const SummonerSpellSelect = ({
   onChange,
   summonerSpellSelected,
   letter,
+  languageSelected,
 }) => {
   const { data: summonerSpellsData } = useSWR(
     latestVersion
-      ? `https://ddragon.leagueoflegends.com/cdn/10.10.5/data/en_US/summoner.json`
+      ? `https://ddragon.leagueoflegends.com/cdn/10.10.5/data/${languageSelected}/summoner.json`
       : null,
     fetcher
   );
@@ -485,11 +509,100 @@ const SummonerSpellSelect = ({
   );
 };
 
-const ChampionSelect = ({ latestVersion, onChange, champion }) => {
+const LanguageSelect = ({ languageSelected, onChange }) => {
+  const { data: languages } = useSWR(
+    "https://ddragon.leagueoflegends.com/cdn/languages.json",
+    fetcher
+  );
+  const dialogRef = useRef(null);
+  return (
+    <div>
+      <div
+        className="relative group"
+        onClick={() => dialogRef.current?.showModal()}
+      >
+        <Image
+          src={`/assets/flags/${languageSelected
+            .split("_")[1]
+            .toLowerCase()}.svg`}
+          alt={languageSelected}
+          className="cursor-pointer rounded ring-2 ring-gray-600"
+          onClick={() => {}}
+          width={56}
+          height={56}
+        />
+        <span className="opacity-0 group-hover:opacity-100 bg-black/70 transition duration-200 w-full h-full rounded absolute right-0 top-0 pointer-events-none">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            className="size-5 absolute left-1/2 top-1/2 -translate-x-1/2 group-hover:-translate-y-1/2 transition-all duration-400"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
+            />
+          </svg>
+        </span>
+      </div>
+
+      {/* Open the modal using document.getElementById('ID').showModal() method */}
+      <dialog ref={dialogRef} className="modal">
+        <div className="modal-box max-w-2xl p-6 bg-base-200 shadow-xl rounded-xl border border-base-300">
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4 max-h-[50vh] overflow-y-auto p-2">
+            {languages?.map((language) => (
+              <button
+                key={language}
+                type="button"
+                className={`flex flex-col items-center p-2 rounded-lg border-2 transition-all duration-200 hover:border-primary hover:scale-105 bg-base-100 shadow-md ${
+                  languageSelected === language
+                    ? "border-primary ring-2 ring-primary"
+                    : "border-transparent"
+                }`}
+                onClick={() => {
+                  onChange?.(language);
+                  dialogRef.current?.close();
+                }}
+                title={language}
+              >
+                <img
+                  src={`/assets/flags/${language
+                    .split("_")[1]
+                    .toLowerCase()}.svg`}
+                  alt={language}
+                  width={64}
+                  height={64}
+                  className="rounded mb-1"
+                  loading="lazy"
+                />
+                <span className="text-xs text-center text-base-content font-medium mt-1">
+                  {language.split("_")[1]}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
+    </div>
+  );
+};
+
+const ChampionSelect = ({
+  latestVersion,
+  onChange,
+  champion,
+  languageSelected,
+}) => {
   // Retrieve champions
   const { data: championsData } = useSWR(
     latestVersion
-      ? `https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/en_US/champion.json`
+      ? `https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/${languageSelected}/champion.json`
       : null,
     fetcher
   );
@@ -556,11 +669,17 @@ const ChampionSelect = ({ latestVersion, onChange, champion }) => {
   );
 };
 
-const SkinSelect = ({ latestVersion, onChange, champion, skinSelected }) => {
+const SkinSelect = ({
+  latestVersion,
+  onChange,
+  champion,
+  skinSelected,
+  languageSelected,
+}) => {
   // Retrieve champion data
   const { data: skinsData } = useSWR(
     latestVersion
-      ? `https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/en_US/champion/${champion.id}.json`
+      ? `https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/${languageSelected}/champion/${champion.id}.json`
       : null,
     fetcher
   );
@@ -600,12 +719,17 @@ const SkinSelect = ({ latestVersion, onChange, champion, skinSelected }) => {
   );
 };
 
-const AvatarSelect = ({ latestVersion, onChange, avatarSelected }) => {
+const AvatarSelect = ({
+  latestVersion,
+  onChange,
+  avatarSelected,
+  languageSelected,
+}) => {
   const BATCH = 120;
 
   const { data, error, isLoading } = useSWR(
     latestVersion
-      ? `https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/en_US/profileicon.json`
+      ? `https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/${languageSelected}/profileicon.json`
       : null,
     fetcher,
     { revalidateOnFocus: false }
