@@ -36,9 +36,8 @@ export default function Home() {
 
   const latestVersion = versions?.[0];
 
-  console.log(data);
   return (
-    <div className="max-w-7xl mx-auto px-4">
+    <div className="max-w-7xl mx-auto px-4 ">
       {/* <div className="flex flex-col items-center py-10">
         <Image
           src="/assets/logo.png"
@@ -49,9 +48,9 @@ export default function Home() {
         />
         <h1 className="text-2xl font-bold">Border configurator</h1>
       </div> */}
-      <div className="grid grid-cols-12 gap-4 mt-6">
-        <div className="col-span-7 bg-black h-full flex items-center justify-center overflow-hidden">
-          <div className="scale-90">
+      <div className="grid grid-cols-12 mt-6">
+        <div className="md:col-span-7 col-span-12 bg-black h-full flex items-center justify-center overflow-hidden min-h-[90vh] md:min-h-auto">
+          <div className="scale-90 ">
             <CometCard>
               <img
                 src={`/assets/borders/${data.rank}.svg`}
@@ -71,12 +70,6 @@ export default function Home() {
                   height={263}
                   className="absolute bottom-[2%] left-1/2 z-10 w-[92%] -translate-x-1/2"
                 />
-
-                <span className="absolute bottom-[18%] left-1/2 -translate-x-1/2 text-xl text-white z-10 tracking-wide font-medium text-center w-10/12">
-                  {data.skin.name === "default"
-                    ? data.champion.name
-                    : data.skin.name}
-                </span>
 
                 <img
                   src={`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/img/profileicon/${data.avatar.id}.png`}
@@ -118,26 +111,39 @@ export default function Home() {
                   className="absolute bottom-[8.1%] left-[23.5%] z-10 w-[6.5%] -translate-x-1/2 "
                 />
 
+                <span className="absolute bottom-[18%] left-1/2 -translate-x-1/2 text-xl text-white z-10  text-center w-10/12 font-beaufort text-[#FFF8E4]">
+                  {data.skin.name === "default"
+                    ? data.champion.name
+                    : data.skin.name}
+                </span>
+
                 <div className="absolute bottom-[18%] left-0 w-full h-[250px] pointer-events-none bg-gradient-to-t from-black to-transparent"></div>
                 <div className="absolute bottom-0 left-0 w-full h-[18.5%] pointer-events-none bg-black"></div>
-                <span className="absolute bottom-[0%] left-1/2 -translate-x-1/2 text-xl text-white z-10 text-center w-10/12">
+                <span className="absolute bottom-[0%] left-1/2 -translate-x-1/2 text-xl text-white z-10 text-center w-10/12 font-beaufort text-[#FFF8E4]">
                   {data.summonerName}
+                </span>
+                <span className="absolute -bottom-[3%] text-[#BFBFBF] text-xs left-1/2 -translate-x-1/2 text-xl  z-10 text-center w-10/12 font-avenir">
+                  {data.title}
                 </span>
               </div>
             </CometCard>
           </div>
         </div>
-        <div className="col-span-5">
-          <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-4 max-h-[94vh] overflow-y-auto">
-            <legend className="fieldset-legend">Customize your border</legend>
+        <div className="md:col-span-5 col-span-12">
+          <fieldset className="fieldset bg-base-300 border-base-300 border p-4 max-h-[94vh] overflow-y-auto">
+            {/* <legend className="fieldset-legend">Customize your border</legend> */}
             <div className="flex gap-4 items-end mb-2">
               <div className="grow">
-                <label className="label">
-                  Summoner name <span className="text-red-500 ">*</span>
+                <label className="label mb-1.5" htmlFor="summonerName">
+                  <span className="label-text">
+                    Summoner name <span className="text-red-500 ">*</span>
+                  </span>
                 </label>
                 <input
                   type="text"
                   className="input w-full"
+                  id="summonerName"
+                  maxLength={28}
                   value={data.summonerName}
                   onChange={(e) =>
                     setData({ ...data, summonerName: e.target.value })
@@ -151,10 +157,8 @@ export default function Home() {
                 onChange={(avatar) => setData({ ...data, avatar: avatar })}
               />
             </div>
-            <label className="label">
-              <span className="label-text">
-                Champion <span className="text-red-500">*</span>
-              </span>
+            <label className="label" htmlFor="champion">
+              <span className="label-text">Champion</span>
             </label>
             <ChampionSelect
               champion={data.champion}
@@ -168,9 +172,7 @@ export default function Home() {
               }
             />
             <label className="label">
-              <span className="label-text -mb-1">
-                Skin <span className="text-red-500">*</span>
-              </span>
+              <span className="label-text -mb-1">Skin</span>
             </label>
             <SkinSelect
               champion={data.champion}
@@ -180,17 +182,24 @@ export default function Home() {
             />
             <div className="grid grid-cols-2 gap-6 mb-2">
               <div>
-                <label className="label mb-1">Title</label>
+                <label className="label mb-1.5" htmlFor="title">
+                  Title
+                </label>
                 <input
                   type="text"
                   className="input w-full mb-2"
+                  id="title"
                   value={data.title}
+                  maxLength={30}
                   onChange={(e) => setData({ ...data, title: e.target.value })}
                 />
               </div>
               <div>
-                <label className="label mb-1">Rank</label>
+                <label className="label mb-1.5" htmlFor="rank">
+                  Rank
+                </label>
                 <select
+                  id="rank"
                   className="select w-full"
                   value={data.rank}
                   onChange={(e) => setData({ ...data, rank: e.target.value })}
@@ -211,7 +220,7 @@ export default function Home() {
 
             <div className="grid grid-cols-2 gap-2 mb-2">
               <div>
-                <label className="label mb-1">Runes</label>
+                <label className="label mb-1.5">Runes</label>
                 <div className="flex items-end">
                   <RuneSelect
                     latestVersion={latestVersion}
@@ -495,6 +504,7 @@ const ChampionSelect = ({ latestVersion, onChange, champion }) => {
   return (
     <div className="relative mb-2">
       <input
+        id="champion"
         type="text"
         placeholder={champion.name}
         className="input  w-full placeholder:text-base-content"

@@ -1,2 +1,10 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+.font-beaufort {
+  font-family: var(--font-beaufort);
+}
+
+.font-avenir {
+  font-family: var(--font-avenir);
+}
