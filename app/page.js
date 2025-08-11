@@ -50,7 +50,7 @@ export default function Home() {
         <h1 className="text-2xl font-bold">Border configurator</h1>
       </div> */}
       <div className="grid grid-cols-12 mt-10 rounded-xl overflow-hidden">
-        <div className="md:col-span-7 col-span-12 bg-black h-full flex items-center justify-center overflow-hidden min-h-[90vh] md:min-h-auto">
+        <div className="md:col-span-7 col-span-12 bg-black h-full flex items-center justify-center overflow-hidden min-h-[90vh] md:min-h-auto relative">
           <div className="scale-90 ">
             <CometCard>
               <img
@@ -128,6 +128,18 @@ export default function Home() {
                 </span>
               </div>
             </CometCard>
+          </div>
+          <div className="text-xs text-base-content/60 absolute bottom-2 left-2 w-full">
+            <p>
+              🧑‍💻 by{" "}
+              <a
+                href="https://brice-eliasse.com/"
+                target="_blank"
+                className="text-primary hover:underline font-medium"
+              >
+                Brice
+              </a>
+            </p>
           </div>
         </div>
         <div className="md:col-span-5 col-span-12">
