@@ -744,34 +744,38 @@ const SkinSelect = ({
 
   return (
     <div className="overflow-x-auto -ms-2 p-2 flex flex-nowrap gap-3">
-      {skins?.map((skin) => (
-        <div
-          key={skin.id}
-          className=" min-w-[100px] w-[100px] flex flex-col items-center gap-1 cursor-pointer group"
-          onClick={() => onChange(skin)}
-        >
-          <Image
-            src={`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champion.id}_${skin.num}.jpg`}
-            alt={skin.name}
-            width={308}
-            height={560}
-            className={`group-hover:scale-105 transition-all duration-200 ring-2 ${
-              skinSelected?.name === skin.name
-                ? "ring-primary/80 scale-105"
-                : "ring-transparent"
-            } rounded-lg shadow-md`}
-          />
-          <span
-            className={`text-xs mt-1.5 text-center max-w-28 transition-all duration-200 ${
-              skinSelected?.id === skin.id
-                ? "text-primary mt-2.5 font-bold"
-                : ""
-            }`}
-          >
-            {skin.name === "default" ? champion.name : skin.name}
-          </span>
-        </div>
-      ))}
+      {skins
+        ? skins.map((skin) => (
+            <div
+              key={skin.id}
+              className=" min-w-[100px] w-[100px] flex flex-col items-center gap-1 cursor-pointer group"
+              onClick={() => onChange(skin)}
+            >
+              <img
+                src={`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champion.id}_${skin.num}.jpg`}
+                alt={skin.name}
+                width={308}
+                height={560}
+                className={`group-hover:scale-105 transition-all duration-200 ring-2 ${
+                  skinSelected?.name === skin.name
+                    ? "ring-primary/80 scale-105"
+                    : "ring-transparent"
+                } rounded-lg shadow-md`}
+              />
+              <span
+                className={`text-xs mt-1.5 text-center max-w-28 transition-all duration-200 ${
+                  skinSelected?.id === skin.id
+                    ? "text-primary mt-2.5 font-bold"
+                    : ""
+                }`}
+              >
+                {skin.name === "default" ? champion.name : skin.name}
+              </span>
+            </div>
+          ))
+        : [0, 1, 2, 3, 4].map((i) => (
+            <div key={i} className="skeleton h-[223px] w-[100px]"></div>
+          ))}
     </div>
   );
 };
