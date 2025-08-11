@@ -49,7 +49,7 @@ export default function Home() {
         />
         <h1 className="text-2xl font-bold">Border configurator</h1>
       </div> */}
-      <div className="grid grid-cols-12 mt-6">
+      <div className="grid grid-cols-12 mt-10 rounded-xl overflow-hidden">
         <div className="md:col-span-7 col-span-12 bg-black h-full flex items-center justify-center overflow-hidden min-h-[90vh] md:min-h-auto">
           <div className="scale-90 ">
             <CometCard>
@@ -144,7 +144,7 @@ export default function Home() {
                   type="text"
                   className="input w-full"
                   id="summonerName"
-                  maxLength={28}
+                  maxLength={16}
                   value={data.summonerName}
                   onChange={(e) =>
                     setData({ ...data, summonerName: e.target.value })
@@ -203,7 +203,7 @@ export default function Home() {
                   className="input w-full mb-2"
                   id="title"
                   value={data.title}
-                  maxLength={30}
+                  maxLength={24}
                   onChange={(e) => setData({ ...data, title: e.target.value })}
                 />
               </div>
@@ -313,7 +313,14 @@ export default function Home() {
               >
                 Preview Fullscreen
               </a>
-              <button className="btn btn-primary grow">Order now (✿◠‿◠)</button>
+              <a
+                href={getProductUrl(data.rank)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary grow"
+              >
+                Order now (✿◠‿◠)
+              </a>
             </div>
           </fieldset>
         </div>
@@ -321,6 +328,23 @@ export default function Home() {
     </div>
   );
 }
+
+const getProductUrl = (rank) => {
+  const rankToProduct = {
+    iron: "https://borders.gg/products/iron",
+    bronze: "https://borders.gg/products/bronze",
+    silver: "https://borders.gg/products/silver",
+    gold: "https://borders.gg/products/gold",
+    platinum: "https://borders.gg/products/platinum",
+    emerald: "https://borders.gg/products/emerald",
+    diamond: "https://borders.gg/products/diamond",
+    master: "https://borders.gg/products/master-summoner-frame",
+    grandmaster: "https://borders.gg/products/grandmaster-summoner-frame",
+    challenger: "https://borders.gg/products/challenger-summoner-frame-1", // Challenger redirige vers Emerald
+  };
+
+  return rankToProduct[rank];
+};
 
 const flattenData = (data, prefix = "", res = {}) => {
   for (const [key, value] of Object.entries(data)) {
