@@ -49,7 +49,7 @@ export default function Home() {
         />
         <h1 className="text-2xl font-bold">Border configurator</h1>
       </div> */}
-      <div className="grid grid-cols-12 md:mt-10 rounded-xl overflow-hidden">
+      <div className="grid grid-cols-12 md:mt-10 md:rounded-xl overflow-hidden">
         <div className="md:col-span-7 col-span-12 bg-black h-full flex items-center justify-center overflow-hidden min-h-[90vh] md:min-h-auto relative">
           <div className="scale-90 ">
             <CometCard>
