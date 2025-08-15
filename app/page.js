@@ -19,9 +19,9 @@ export default function Home() {
         icon: "perk-images/Styles/Sorcery/ArcaneComet/ArcaneComet.png",
       },
       secondary: {
-        key: "PressTheAttack",
-        name: "Press The Attack",
-        icon: "perk-images/Styles/Precision/PressTheAttack/PressTheAttack.png",
+        key: "Precision",
+        name: "Precision",
+        icon: "perk-images/Styles/7201_Precision.png",
       },
     },
     summonerSpell: { d: "SummonerFlash", f: "SummonerDot" },
@@ -107,9 +107,9 @@ export default function Home() {
                 <img
                   src={`https://ddragon.leagueoflegends.com/cdn/img/${data.runes.secondary.icon}`}
                   alt="Secondary rune"
-                  width={50}
-                  height={50}
-                  className="absolute bottom-[8.1%] left-[23.5%] z-10 w-[6.5%] -translate-x-1/2 "
+                  width={32}
+                  height={32}
+                  className="absolute bottom-[8%] left-[23.5%] z-10 w-[6.5%] -translate-x-1/2 p-[3px]"
                 />
 
                 <span className="absolute bottom-[18%] left-1/2 -translate-x-1/2 text-xl text-white z-10  text-center w-10/12 font-beaufort text-[#FFF8E4]">
@@ -259,7 +259,7 @@ export default function Home() {
                     }
                     languageSelected={data.language}
                   />
-                  <RuneSelect
+                  <RuneSecondarySelect
                     latestVersion={latestVersion}
                     runeSelected={data.runes.secondary}
                     languageSelected={data.language}
@@ -388,7 +388,7 @@ const RuneSelect = ({
   const runes = useMemo(
     () =>
       (runesData ?? []).flatMap((s) =>
-        (s?.slots?.[0]?.runes ?? []).slice(0, 3)
+        Array.isArray(s?.slots?.[0]?.runes) ? s.slots[0].runes : []
       ),
     [runesData]
   );
@@ -399,7 +399,7 @@ const RuneSelect = ({
         className="relative group"
         onClick={() => dialogRef.current?.showModal()}
       >
-        <Image
+        <img
           src={`https://ddragon.leagueoflegends.com/cdn/img/${runeSelected.icon}`}
           alt={runeSelected.name}
           className={`cursor-pointer rounded ${
@@ -464,6 +464,90 @@ const RuneSelect = ({
   );
 };
 
+const RuneSecondarySelect = ({
+  latestVersion,
+  onChange,
+  runeSelected,
+  type,
+  languageSelected,
+}) => {
+  const { data: runes } = useSWR(
+    latestVersion
+      ? `https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/${languageSelected}/runesReforged.json`
+      : null,
+    fetcher
+  );
+  const dialogRef = useRef(null);
+
+  return (
+    <div>
+      <div
+        className="relative group"
+        onClick={() => dialogRef.current?.showModal()}
+      >
+        <img
+          src={`https://ddragon.leagueoflegends.com/cdn/img/${runeSelected.icon}`}
+          alt={runeSelected.name}
+          className={`cursor-pointer rounded w-9 h-9 p-1.5`}
+          width={32}
+          height={32}
+        />
+        <span className="opacity-0 group-hover:opacity-100 bg-black/70 transition duration-200 w-full h-full rounded absolute right-0 top-0 pointer-events-none">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            className="size-5 absolute left-1/2 top-1/2 -translate-x-1/2 group-hover:-translate-y-1/2 transition-all duration-400"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
+            />
+          </svg>
+        </span>
+      </div>
+
+      {/* Open the modal using document.getElementById('ID').showModal() method */}
+      <dialog ref={dialogRef} className="modal">
+        <div className="modal-box max-w-2xl p-6 bg-base-200 shadow-xl rounded-xl border border-base-300">
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4 max-h-[50vh] overflow-y-auto p-2">
+            {runes?.map((rune) => (
+              <button
+                key={rune.id}
+                type="button"
+                className={`flex cursor-pointer flex-col items-center px-2  py-4 rounded-lg border-2 transition-all duration-200 hover:border-primary hover:scale-105 bg-base-100 shadow-md`}
+                onClick={() => {
+                  onChange?.(rune);
+                  dialogRef.current?.close();
+                }}
+                title={rune.name}
+              >
+                <img
+                  src={`https://ddragon.leagueoflegends.com/cdn/img/${rune.icon}`}
+                  alt={rune.name}
+                  width={32}
+                  height={32}
+                  className="rounded mb-1"
+                  loading="lazy"
+                />
+                <span className="text-xs text-center text-base-content font-medium">
+                  {rune.name}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
+    </div>
+  );
+};
+
 const SummonerSpellSelect = ({
   latestVersion,
   onChange,
@@ -498,7 +582,7 @@ const SummonerSpellSelect = ({
         <kbd className="kbd uppercase kbd-xs absolute bottom-0 right-0 z-10 pointer-events-none">
           {letter}
         </kbd>
-        <Image
+        <img
           src={`https://ddragon.leagueoflegends.com/cdn/10.10.5/img/spell/${summonerSpellSelected}.png`}
           alt={summonerSpellSelected}
           className="cursor-pointer rounded"
@@ -575,10 +659,10 @@ const LanguageSelect = ({ languageSelected, onChange }) => {
   return (
     <div>
       <div
-        className="relative group"
+        className="relative group w-[56px]"
         onClick={() => dialogRef.current?.showModal()}
       >
-        <Image
+        <img
           src={`/assets/flags/${languageSelected
             .split("_")[1]
             .toLowerCase()}.svg`}
@@ -862,7 +946,7 @@ const AvatarSelect = ({
   return (
     <div>
       {/* Trigger: you can replace with <img> if you prefer */}
-      <span className="relative group">
+      <div className="relative group w-[56px]">
         <Image
           src={`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/img/profileicon/${
             avatarSelected.id || 588
@@ -890,7 +974,7 @@ const AvatarSelect = ({
             />
           </svg>
         </span>
-      </span>
+      </div>
       <dialog ref={dialogRef} id="modal" className="modal">
         <div className="modal-box w-9/12  max-w-7xl p-4">
           <form method="dialog">
