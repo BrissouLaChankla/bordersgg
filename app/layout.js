@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${avenir.variable} ${beaufort.variable} bg-transparent`}
+      className={`${avenir.variable} ${beaufort.variable} bg-white`}
       data-theme="custom-dark"
     >
       <body className="antialiased ">{children}</body>
