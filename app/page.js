@@ -133,7 +133,7 @@ export default function Home() {
             <p>
               🧑‍💻 by{" "}
               <a
-                href="https://brice-eliasse.com/"
+                href="https://brice-eliasse.com/en"
                 target="_blank"
                 className="text-primary hover:underline font-medium"
               >
