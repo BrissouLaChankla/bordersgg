@@ -1,5 +1,6 @@
 import localFont from "next/font/local";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 
 export const avenir = localFont({
   src: "../public/fonts/Avenir.ttf",
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
       data-theme="custom-dark"
     >
       <body className="antialiased ">{children}</body>
+      <Analytics />
     </html>
   );
 }
