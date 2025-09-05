@@ -40,7 +40,7 @@ export default function Home() {
   return (
     <div className="max-w-7xl mx-auto md:px-4 ">
       {/* <div className="flex flex-col items-center py-10">
-        <Image
+        <img
           src="/assets/logo.png"
           alt="logo"
           className="w-24"
@@ -64,7 +64,7 @@ export default function Home() {
                   alt={data.avatar.name}
                   className="w-[308px] h-[560px] -translate-y-[2%] "
                 />
-                <Image
+                <img
                   src={`/assets/layout.png`}
                   alt="layout"
                   width={640}
@@ -771,7 +771,7 @@ const ChampionSelect = ({
           setTimeout(() => setDropdownOpen(false), 200);
         }}
       />
-      <Image
+      <img
         alt={champion.name}
         src={`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/img/champion/${champion.id}.png`}
         width={24}
@@ -793,7 +793,7 @@ const ChampionSelect = ({
             >
               <div className="avatar">
                 <div className="w-8">
-                  <Image
+                  <img
                     src={`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/img/champion/${champion.id}.png`}
                     alt={champion.name}
                     width={24}
@@ -947,7 +947,7 @@ const AvatarSelect = ({
     <div>
       {/* Trigger: you can replace with <img> if you prefer */}
       <div className="relative group w-[56px]">
-        <Image
+        <img
           src={`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/img/profileicon/${
             avatarSelected.id || 588
           }.png`}
@@ -956,7 +956,6 @@ const AvatarSelect = ({
           height={56}
           className="w-14 h-14 cursor-pointer rounded ring-2 ring-gray-600 aspect-square"
           onClick={openModal}
-          unoptimized
         />
         <span className="opacity-0 group-hover:opacity-100 bg-black/70 transition duration-200 w-full h-full rounded absolute right-0 top-0 pointer-events-none">
           <svg

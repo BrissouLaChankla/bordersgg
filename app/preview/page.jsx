@@ -30,7 +30,7 @@ function PreviewContent() {
             alt={data["avatar.name"]}
             className="w-[308px] h-[560px] -translate-y-[2%] "
           />
-          <Image
+          <img
             src={`/assets/layout.png`}
             alt="layout"
             width={640}
