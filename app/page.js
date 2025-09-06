@@ -985,27 +985,45 @@ const AvatarSelect = ({
             </button>
           </form>
 
-          <h3 className="font-semibold text-lg mb-3">Choose an icon</h3>
+          <div className="flex gap-5 mt-2 mb-6">
+            <div>
+              <h3 className="font-semibold text-lg ">Choose an icon</h3>
 
-          {/* Toolbar: search */}
-          <div className="mb-3 flex items-center gap-2">
-            <input
-              value={query}
-              onChange={(e) => {
-                setQuery(e.target.value);
-                // reset batch when search changes
-                setVisibleCount(BATCH);
-              }}
-              type="text"
-              placeholder="Search by ID…"
-              className="input input-sm input-bordered w-full max-w-xs"
-            />
-            {isLoading && (
-              <span className="loading loading-spinner loading-sm" />
-            )}
-            {error && (
-              <span className="text-error text-sm">Error loading icons</span>
-            )}
+              {/* Toolbar: search */}
+              <div className="mb-2 flex items-center gap-2"></div>
+              <input
+                value={query}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                  // reset batch when search changes
+                  setVisibleCount(BATCH);
+                }}
+                type="text"
+                placeholder="Search by ID…"
+                className="input  input-bordered w-full "
+              />
+              {isLoading && (
+                <span className="loading loading-spinner loading-sm" />
+              )}
+              {error && (
+                <span className="text-error text-sm">Error loading icons</span>
+              )}
+            </div>
+            <div className="px-4 flex border-info items-center border-l rounded-md w-5/6">
+              <p className="text-sm  ">
+                You can go to this website :{" "}
+                <a
+                  href="https://lolmath.net/articles/summoner-icons"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-info link "
+                >
+                  https://lolmath.net/articles/summoner-icons
+                </a>{" "}
+                <br />
+                to find the ID of your avatar and type it here.
+              </p>
+            </div>
           </div>
 
           {/* Scrollable area */}
