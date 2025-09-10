@@ -39,17 +39,20 @@ export default function Home() {
 
   return (
     <div className="max-w-7xl mx-auto md:px-4 ">
-      {/* <div className="flex flex-col items-center py-10">
-        <img
+      {/* <img
           src="/assets/logo.png"
           alt="logo"
           className="w-24"
           width={256}
           height={269}
-        />
-        <h1 className="text-2xl font-bold">Border configurator</h1>
-      </div> */}
+        /> */}
+
       <div className="grid grid-cols-12 md:mt-10 md:rounded-xl overflow-hidden">
+        <p className="text-xl col-span-12 text-center text-base-content/80 bg-black md:rounded-t-lg p-3 !text-sm border-b border-base-300">
+          <span className="font-bold text-primary">!!</span> Custom images are
+          possible too, ask about it in a Discord ticket{" "}
+          <span className="text-primary font-bold">!!</span>
+        </p>
         <div className="md:col-span-7 col-span-12 bg-black h-full flex items-center justify-center overflow-hidden min-h-[90vh] md:min-h-auto relative">
           <div className="scale-90 ">
             <CometCard>
@@ -60,7 +63,11 @@ export default function Home() {
               />
               <div className="relative ">
                 <img
-                  src={`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${data.champion.id}_${data.skin.num}.jpg`}
+                  src={`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${
+                    data.champion.id === "Fiddlesticks"
+                      ? "FiddleSticks"
+                      : data.champion.id
+                  }_${data.skin.num}.jpg`}
                   alt={data.avatar.name}
                   className="w-[308px] h-[560px] -translate-y-[2%] "
                 />
@@ -826,6 +833,8 @@ const SkinSelect = ({
   );
   const skins = skinsData?.data[champion.id].skins;
 
+  console.log(skins);
+
   return (
     <div className="overflow-x-auto -ms-2 p-2 flex flex-nowrap gap-3">
       {skins
@@ -836,7 +845,9 @@ const SkinSelect = ({
               onClick={() => onChange(skin)}
             >
               <img
-                src={`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champion.id}_${skin.num}.jpg`}
+                src={`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${
+                  champion.id === "Fiddlesticks" ? "FiddleSticks" : champion.id
+                }_${skin.num}.jpg`}
                 alt={skin.name}
                 width={308}
                 height={560}
@@ -985,7 +996,7 @@ const AvatarSelect = ({
             </button>
           </form>
 
-          <div className="flex gap-5 mt-2 mb-6">
+          <div className="flex flex-col md:flex-row gap-5 mt-2 mb-6">
             <div>
               <h3 className="font-semibold text-lg ">Choose an icon</h3>
 
@@ -1009,7 +1020,7 @@ const AvatarSelect = ({
                 <span className="text-error text-sm">Error loading icons</span>
               )}
             </div>
-            <div className="px-4 flex border-info items-center border-l rounded-md w-5/6">
+            <div className="md:px-4 pt-4 md:pt-0 flex border-info items-center md:border-l rounded-md w-full md:w-5/6">
               <p className="text-sm  ">
                 You can go to this website :{" "}
                 <a
@@ -1018,7 +1029,7 @@ const AvatarSelect = ({
                   rel="noopener noreferrer"
                   className="text-info link "
                 >
-                  https://lolmath.net/articles/summoner-icons
+                  https://lolmath.net
                 </a>{" "}
                 <br />
                 to find the ID of your avatar and type it here.
