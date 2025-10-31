@@ -333,7 +333,8 @@ export default function Home() {
                 Preview Fullscreen
               </a>
               <a
-                href={getProductUrl(data.rank)}
+                // href={getProductUrl(data.rank)}
+                href="https://borders.gg/collections/all"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-primary grow"
@@ -662,6 +663,18 @@ const LanguageSelect = ({ languageSelected, onChange }) => {
     "https://ddragon.leagueoflegends.com/cdn/languages.json",
     fetcher
   );
+  // Filter languages to keep only English, German, French, Korean, Japanese, Chinese, Spanish
+  const filteredLanguages = languages?.filter(lang =>
+    [
+      "en_US", // English
+      "de_DE", // German
+      "fr_FR", // French
+      "ko_KR", // Korean
+      "ja_JP", // Japanese
+      "zh_CN", // Chinese (Simplified)
+      "es_ES", // Spanish (Spain)
+    ].includes(lang)
+  );
   const dialogRef = useRef(null);
   return (
     <div>
@@ -701,7 +714,7 @@ const LanguageSelect = ({ languageSelected, onChange }) => {
       <dialog ref={dialogRef} className="modal">
         <div className="modal-box max-w-2xl p-6 bg-base-200 shadow-xl rounded-xl border border-base-300">
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4 max-h-[50vh] overflow-y-auto p-2">
-            {languages?.map((language) => (
+            {filteredLanguages?.map((language) => (
               <button
                 key={language}
                 type="button"
@@ -833,7 +846,6 @@ const SkinSelect = ({
   );
   const skins = skinsData?.data[champion.id].skins;
 
-  console.log(skins);
 
   return (
     <div className="overflow-x-auto -ms-2 p-2 flex flex-nowrap gap-3">
