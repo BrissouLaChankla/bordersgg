@@ -26,7 +26,7 @@ export default function Home() {
       },
     },
     summonerSpell: { d: "SummonerFlash", f: "SummonerBarrier" },
-    rank: "challenger",
+    rank: "old_challenger",
     language: "en_US",
   });
 
