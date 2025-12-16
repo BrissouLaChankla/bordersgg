@@ -12,9 +12,11 @@ function PreviewContent() {
     fetcher
   );
 
-  const latestVersion = versions?.[0];
+  const latestVersion = versions?.[0] || "10.10.5";
   const searchParams = useSearchParams();
   const data = Object.fromEntries(searchParams);
+  const summonnerIconsVersion =
+    data.oldSummonersIconsVersion == "true" ? "10.10.5" : latestVersion;
 
   return (
     <div className="bg-black h-screen flex items-center justify-center">
@@ -31,7 +33,7 @@ function PreviewContent() {
             className="w-[308px] h-[560px] -translate-y-[2%] "
           />
           <img
-            src={`/assets/layout.png`}
+            src={`/assets/layout.svg`}
             alt="layout"
             width={640}
             height={263}
@@ -47,7 +49,7 @@ function PreviewContent() {
           />
 
           <img
-            src={`https://ddragon.leagueoflegends.com/cdn/10.10.5/img/spell/${data["summonerSpell.d"]}.png`}
+            src={`https://ddragon.leagueoflegends.com/cdn/${summonnerIconsVersion}/img/spell/${data["summonerSpell.d"]}.png`}
             alt="D summoner spell"
             width={40}
             height={40}
@@ -55,7 +57,7 @@ function PreviewContent() {
           />
 
           <img
-            src={`https://ddragon.leagueoflegends.com/cdn/10.10.5/img/spell/${data["summonerSpell.f"]}.png`}
+            src={`https://ddragon.leagueoflegends.com/cdn/${summonnerIconsVersion}/img/spell/${data["summonerSpell.f"]}.png`}
             alt="F summoner spell"
             width={40}
             height={40}

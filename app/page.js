@@ -6,25 +6,26 @@ import { useState, useEffect, useMemo, useRef } from "react";
 import { CometCard } from "@/components/ui/comet-card";
 
 export default function Home() {
+  const [oldSummonersIconsVersion, setOldSummonersIconsVersion] = useState(false);
   const [data, setData] = useState({
     summonerName: "1yanou",
-    champion: { name: "Ahri", id: "Ahri" },
-    skin: { name: "default", id: "default", num: 0 },
-    avatar: { id: 588 },
-    title: "",
+    champion: { name: "Draven", id: "Draven" },
+    skin: { name: "Debonair Draven", id: "119029", num: 29 },
+    avatar: { id: 55 },
+    title: "Silly Lil' Gamer",
     runes: {
       primary: {
-        key: "ArcaneComet",
-        name: "Arcane Comet",
-        icon: "perk-images/Styles/Sorcery/ArcaneComet/ArcaneComet.png",
+        key: "LethalTempo",
+        name: "Lethal Tempo",
+        icon: "perk-images/Styles/Precision/LethalTempo/LethalTempoTemp.png",
       },
       secondary: {
-        key: "Precision",
-        name: "Precision",
-        icon: "perk-images/Styles/7201_Precision.png",
+        key: "Domination",
+        name: "Domination",
+        icon: "perk-images/Styles/7200_Domination.png",
       },
     },
-    summonerSpell: { d: "SummonerFlash", f: "SummonerDot" },
+    summonerSpell: { d: "SummonerFlash", f: "SummonerBarrier" },
     rank: "challenger",
     language: "en_US",
   });
@@ -34,8 +35,8 @@ export default function Home() {
     "https://ddragon.leagueoflegends.com/api/versions.json",
     fetcher
   );
-
-  const latestVersion = versions?.[0];
+  
+  const latestVersion = versions?.[0] || "10.10.5";
 
   return (
     <div className="max-w-7xl mx-auto md:px-4 ">
@@ -72,7 +73,7 @@ export default function Home() {
                   className="w-[308px] h-[560px] -translate-y-[2%] "
                 />
                 <img
-                  src={`/assets/layout.png`}
+                  src={`/assets/layout.svg`}
                   alt="layout"
                   width={640}
                   height={263}
@@ -88,7 +89,7 @@ export default function Home() {
                 />
 
                 <img
-                  src={`https://ddragon.leagueoflegends.com/cdn/10.10.5/img/spell/${data.summonerSpell.d}.png`}
+                  src={`https://ddragon.leagueoflegends.com/cdn/${oldSummonersIconsVersion ? "10.10.5" : latestVersion}/img/spell/${data.summonerSpell.d}.png`}
                   alt="D summoner spell"
                   width={40}
                   height={40}
@@ -96,7 +97,7 @@ export default function Home() {
                 />
 
                 <img
-                  src={`https://ddragon.leagueoflegends.com/cdn/10.10.5/img/spell/${data.summonerSpell.f}.png`}
+                  src={`https://ddragon.leagueoflegends.com/cdn/${oldSummonersIconsVersion ? "10.10.5" : latestVersion}/img/spell/${data.summonerSpell.f}.png`}
                   alt="F summoner spell"
                   width={40}
                   height={40}
@@ -140,11 +141,11 @@ export default function Home() {
             <p>
               🧑‍💻 by{" "}
               <a
-                href="https://brice-eliasse.com/en"
+                href="https://lol-tracker.com"
                 target="_blank"
                 className="text-primary hover:underline font-medium"
               >
-                Brice
+                Lol-Tracker
               </a>
             </p>
           </div>
@@ -236,6 +237,16 @@ export default function Home() {
                   value={data.rank}
                   onChange={(e) => setData({ ...data, rank: e.target.value })}
                 >
+                  <option value="old_iron">Old Iron</option>
+                  <option value="old_bronze">Old Bronze</option>
+                  <option value="old_silver">Old Silver</option>
+                  <option value="old_gold">Old Gold</option>
+                  <option value="old_platinum">Old Platinum</option>
+                  <option value="old_emerald">Old Emerald</option>
+                  <option value="old_diamond">Old Diamond</option>
+                  <option value="old_master">Old Master</option>
+                  <option value="old_grandmaster">Old Grandmaster</option>
+                  <option value="old_challenger">Old Challenger</option>
                   <option value="iron">Iron</option>
                   <option value="bronze">Bronze</option>
                   <option value="silver">Silver</option>
@@ -284,6 +295,8 @@ export default function Home() {
                 <label className="label mb-2">Summoner spells</label>
                 <div className="flex gap-2">
                   <SummonerSpellSelect
+                    oldSummonersIconsVersion={oldSummonersIconsVersion}
+                    setOldSummonersIconsVersion={setOldSummonersIconsVersion}
                     letter="d"
                     latestVersion={latestVersion}
                     summonerSpellSelected={data.summonerSpell.d}
@@ -301,6 +314,8 @@ export default function Home() {
                   <SummonerSpellSelect
                     letter="f"
                     latestVersion={latestVersion}
+                    oldSummonersIconsVersion={oldSummonersIconsVersion}
+                    setOldSummonersIconsVersion={setOldSummonersIconsVersion}
                     summonerSpellSelected={data.summonerSpell.f}
                     languageSelected={data.language}
                     onChange={(summonerSpell) =>
@@ -324,7 +339,7 @@ export default function Home() {
             ></textarea> */}
             <div className="flex gap-4 mt-4">
               <a
-                href={`/preview?${new URLSearchParams(
+                href={`/preview?oldSummonersIconsVersion=${oldSummonersIconsVersion}&${new URLSearchParams(
                   flattenData(data)
                 ).toString()}`}
                 target="_blank"
@@ -440,14 +455,14 @@ const RuneSelect = ({
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4 max-h-[50vh] overflow-y-auto p-2">
             {runes.map((rune) => (
               <button
-                key={rune.id}
-                type="button"
-                className={`flex flex-col items-center p-2 rounded-lg border-2 transition-all duration-200 hover:border-primary hover:scale-105 bg-base-100 shadow-md`}
-                onClick={() => {
-                  onChange?.(rune);
-                  dialogRef.current?.close();
-                }}
-                title={rune.name}
+              key={rune.id}
+              type="button"
+              className={`flex flex-col items-center p-2 rounded-lg border-2 transition-all duration-200 hover:border-primary hover:scale-105 bg-base-100 shadow-md`}
+              onClick={() => {
+                onChange?.(rune);
+                dialogRef.current?.close();
+              }}
+              title={rune.name}
               >
                 <img
                   src={`https://ddragon.leagueoflegends.com/cdn/img/${rune.icon}`}
@@ -562,10 +577,12 @@ const SummonerSpellSelect = ({
   summonerSpellSelected,
   letter,
   languageSelected,
+  oldSummonersIconsVersion,
+  setOldSummonersIconsVersion,
 }) => {
   const { data: summonerSpellsData } = useSWR(
     latestVersion
-      ? `https://ddragon.leagueoflegends.com/cdn/10.10.5/data/${languageSelected}/summoner.json`
+      ? `https://ddragon.leagueoflegends.com/cdn/${oldSummonersIconsVersion ? "10.10.5" : latestVersion}/data/${languageSelected}/summoner.json`
       : null,
     fetcher
   );
@@ -574,10 +591,11 @@ const SummonerSpellSelect = ({
   const allSpells = Object.values(summonerSpellsData?.data ?? {});
   const seenNames = new Set();
   let summonerSpells = allSpells.filter((spell) => {
+    if (spell.name === "Placeholder" || spell.name === "Placeholder and Attack-Smite") return false;
     if (seenNames.has(spell.name)) return false;
     seenNames.add(spell.name);
     return true;
-  });
+  }).sort((a, b) => a.name.localeCompare(b.name));
 
   // summonerSpells = summonerSpells.slice(0, -2);
 
@@ -591,7 +609,7 @@ const SummonerSpellSelect = ({
           {letter}
         </kbd>
         <img
-          src={`https://ddragon.leagueoflegends.com/cdn/10.10.5/img/spell/${summonerSpellSelected}.png`}
+          src={`https://ddragon.leagueoflegends.com/cdn/${oldSummonersIconsVersion ? "10.10.5" : latestVersion}/img/spell/${summonerSpellSelected}.png`}
           alt={summonerSpellSelected}
           className="cursor-pointer rounded"
           onClick={() => {}}
@@ -618,7 +636,18 @@ const SummonerSpellSelect = ({
 
       {/* Open the modal using document.getElementById('ID').showModal() method */}
       <dialog ref={dialogRef} className="modal">
-        <div className="modal-box max-w-2xl p-6 bg-base-200 shadow-xl rounded-xl border border-base-300">
+        <div className="modal-box max-w-2xl p-6 bg-base-200 shadow-xl rounded-xl border border-base-300 h-[52vh]">
+          <div className="flex justify-end mb-3">  
+            <button className="btn btn-sm btn-outline btn-primary" onClick={() => {
+              setOldSummonersIconsVersion((prev) => !prev);
+            }}>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+</svg>
+
+              Switch to {oldSummonersIconsVersion ? "new" : "old"} icons
+            </button>
+          </div>
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4 max-h-[50vh] overflow-y-auto p-2">
             {summonerSpells.map((summonerSpell) => (
               <button
@@ -636,7 +665,7 @@ const SummonerSpellSelect = ({
                 title={summonerSpell.name}
               >
                 <img
-                  src={`https://ddragon.leagueoflegends.com/cdn/10.10.5/img/spell/${summonerSpell.id}.png`}
+                  src={`https://ddragon.leagueoflegends.com/cdn/${oldSummonersIconsVersion ? "10.10.5" : latestVersion}/img/spell/${summonerSpell.id}.png`}
                   alt={summonerSpell.name}
                   width={64}
                   height={64}
@@ -644,7 +673,7 @@ const SummonerSpellSelect = ({
                   loading="lazy"
                 />
                 <span className="text-xs text-center text-base-content font-medium">
-                  {summonerSpell.name}
+                  {summonerSpell.name} 
                 </span>
               </button>
             ))}
