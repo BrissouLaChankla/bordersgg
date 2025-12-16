@@ -237,26 +237,26 @@ export default function Home() {
                   value={data.rank}
                   onChange={(e) => setData({ ...data, rank: e.target.value })}
                 >
-                  <option value="old_iron">Old Iron</option>
-                  <option value="old_bronze">Old Bronze</option>
-                  <option value="old_silver">Old Silver</option>
-                  <option value="old_gold">Old Gold</option>
-                  <option value="old_platinum">Old Platinum</option>
-                  <option value="old_emerald">Old Emerald</option>
-                  <option value="old_diamond">Old Diamond</option>
-                  <option value="old_master">Old Master</option>
-                  <option value="old_grandmaster">Old Grandmaster</option>
+                  <option value="challenger">New Challenger</option>
                   <option value="old_challenger">Old Challenger</option>
-                  <option value="iron">Iron</option>
-                  <option value="bronze">Bronze</option>
-                  <option value="silver">Silver</option>
-                  <option value="gold">Gold</option>
-                  <option value="platinum">Platinum</option>
-                  <option value="emerald">Emerald</option>
-                  <option value="diamond">Diamond</option>
-                  <option value="master">Master</option>
-                  <option value="grandmaster">Grandmaster</option>
-                  <option value="challenger">Challenger</option>
+                  <option value="grandmaster">New Grandmaster</option>
+                  <option value="old_grandmaster">Old Grandmaster</option>
+                  <option value="master">New Master</option>
+                  <option value="old_master">Old Master</option>
+                  <option value="diamond">New Diamond</option>
+                  <option value="old_diamond">Old Diamond</option>
+                  <option value="emerald">New Emerald</option>
+                  <option value="old_emerald">Old Emerald</option>
+                  <option value="platinum">New Platinum</option>
+                  <option value="old_platinum">Old Platinum</option>
+                  <option value="gold">New Gold</option>
+                  <option value="old_gold">Old Gold</option>
+                  <option value="silver">New Silver</option>
+                  <option value="old_silver">Old Silver</option>
+                  <option value="bronze">New Bronze</option>
+                  <option value="old_bronze">Old Bronze</option>
+                  <option value="iron">New Iron</option>
+                  <option value="old_iron">Old Iron</option>
                 </select>
               </div>
             </div>
